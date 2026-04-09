@@ -50,7 +50,7 @@
 ## 👤 Autor
 
 **Chris** - *Junior Web Front-End Developer*
-* GitHub: [@tu-usuario](https://github.com/Chrisrocks-11)
+* GitHub: (https://github.com/Chrisrocks-11)
 * Proyecto desarrollado como parte del portafolio profesional.
 
 ---
