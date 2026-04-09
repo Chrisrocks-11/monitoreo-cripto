@@ -1,0 +1,8 @@
+# Ignorar carpetas pesadas o no relacionadas
+venv/* linguist-vendored
+node_modules/* linguist-vendored
+dist/* linguist-vendored
+
+# Forzar a TypeScript como lenguaje principal
+*.ts linguist-detectable=true
+*.css linguist-documentation=true
