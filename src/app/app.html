@@ -1,0 +1,96 @@
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap"
+    rel="stylesheet">
+
+<div class="dashboard-wrapper" [class.light-mode]="!isDarkMode">
+    <div class="crypto-rain">
+        <img *ngFor="let logo of backgroundLogos" [src]="logo.image" [style.left.%]="logo.left"
+            [style.animation-duration.s]="logo.duration" [style.width.px]="logo.size" [style.opacity]="logo.opacity"
+            class="rain-item">
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">CRYPTO<span>PULSE</span></div>
+        <div class="nav-actions">
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch">
+                    <input type="checkbox" [checked]="!isDarkMode" (change)="toggleTheme()" />
+                    <div class="slider">
+                        <span class="icon sun">☀️</span>
+                        <span class="icon moon">🌙</span>
+                    </div>
+                </label>
+            </div>
+            <span class="user-tag">Chris Terminal v1.0</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="main-header">
+            <h1 class="title-focus">Panel de Mercado Global</h1>
+            <p>Actualización en tiempo real vía Angular Engine</p>
+        </header>
+
+        <div class="search-bar">
+            <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar activo (ej. BTC)..." class="custom-input">
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Capitalización Total</span>
+                <div class="stat-value">$2.4T <span class="trend-pos">+1.2%</span></div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Dominancia BTC</span>
+                <div class="stat-value">52.4% <span class="trend-stable">Estable</span></div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Estado del Servidor</span>
+                <div class="stat-value server-live">
+                    LIVE <span class="trend-pos subtitle">Sincronizado</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container no-scroll-desktop">
+            <table class="crypto-table">
+                <thead>
+                    <tr>
+                        <th>Activo</th>
+                        <th class="text-center">Símbolo</th>
+                        <th class="text-right">Precio USD</th>
+                        <th class="text-right">24h Change</th>
+                        <th class="text-center">Tendencia (7d)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="cryptos.length === 0">
+                        <td colspan="5" class="text-center server-live" style="padding: 40px;">[ Sincronizando con el
+                            mercado global... ]</td>
+                    </tr>
+                    <tr *ngFor="let crypto of filteredCryptos" class="crypto-row">
+                        <td class="cell-start">
+                            <div class="coin-info">
+                                <img [src]="crypto.image" class="coin-logo">
+                                <span>{{ crypto.name }}</span>
+                            </div>
+                        </td>
+                        <td class="text-center"><span class="badge">{{ crypto.symbol }}</span></td>
+                        <td class="text-right price-font">{{ crypto.price | number:'1.2-2' }}</td>
+                        <td class="text-right"
+                            [ngClass]="{'trend-pos': crypto.change.startsWith('+'), 'trend-neg': crypto.change.startsWith('-')}">
+                            {{ crypto.change }}
+                        </td>
+                        <td class="text-center cell-end">
+                            <svg width="100" height="30">
+                                <polyline fill="none"
+                                    [attr.stroke]="crypto.change.startsWith('+') ? 'var(--up)' : 'var(--down)'"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    [attr.points]="generateSparkline(crypto.history)" />
+                            </svg>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
